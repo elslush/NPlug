@@ -225,18 +225,23 @@ public class PortableBinaryReader : IDisposable
         int length = ReadInt32();
         if (length == 0) return string.Empty;
         // TODO: use stackalloc
-        var buffer = ArrayPool<byte>.Shared.Rent(length * 2);
+        var isOnStack = length * 2 <= 1024;
+        IMemoryOwner<byte>? arrayBuffer = null;
+        Span<byte> buffer = isOnStack
+            ? stackalloc byte[length * 2]
+            : (arrayBuffer = MemoryPool<byte>.Shared.Rent(length * 2)).Memory.Span;
+        
         try
         {
             if (Stream.Read(buffer) != length * 2)
             {
                 throw new EndOfStreamException();
             }
-            return new string(MemoryMarshal.Cast<byte, char>(buffer.AsSpan(0, length * 2)));
+            return new string(MemoryMarshal.Cast<byte, char>(buffer));
         }
         finally
         {
-            ArrayPool<byte>.Shared.Return(buffer);
+            arrayBuffer?.Dispose();
         }
     }
 

@@ -49,7 +49,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct FUnknown : INativeGuid, INativeUnknown, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -265,7 +265,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (FUnknown, 0x00000000, 0x00000000, 0xC0000000, 0x00000046)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -287,7 +287,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IBStream : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -441,21 +441,29 @@ internal static partial class LibVst
             /// </summary>
             kIBSeekEnd,
         }
-        
+
         /// <summary>
         /// DECLARE_CLASS_IID (IBStream, 0xC3BF6EA2, 0x30994752, 0x9B6BF990, 0x1EE33E9B)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId => ref GetIIdGuid();
+        private static ref Guid GetIIdGuid()
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get
-            {
-                return ref Unsafe.As<byte, Guid>(ref MemoryMarshal.GetReference((OperatingSystem.IsWindows()
-                        ? new ReadOnlySpan<byte>(new byte[] { 0xa2, 0x6e, 0xbf, 0xc3, 0x99, 0x30, 0x52, 0x47, 0x9b, 0x6b, 0xf9, 0x90, 0x1e, 0xe3, 0x3e, 0x9b })
-                        : new ReadOnlySpan<byte>(new byte[] { 0xc3, 0xbf, 0x6e, 0xa2, 0x30, 0x99, 0x47, 0x52, 0x9b, 0x6b, 0xf9, 0x90, 0x1e, 0xe3, 0x3e, 0x9b })
-                    )));
-            }
+            return ref Unsafe.As<byte, Guid>(ref MemoryMarshal.GetReference((OperatingSystem.IsWindows()
+                    ? new ReadOnlySpan<byte>(new byte[] { 0x71, 0x04, 0x1a, 0xa8, 0xc3, 0x48, 0xc4, 0x4d, 0xac, 0x30, 0xc9, 0xe1, 0x3c, 0x83, 0x93, 0xd5 })
+                    : new ReadOnlySpan<byte>(new byte[] { 0xa8, 0x1a, 0x04, 0x71, 0x48, 0xc3, 0x4d, 0xc4, 0xac, 0x30, 0xc9, 0xe1, 0x3c, 0x83, 0x93, 0xd5 })
+                )));
         }
+        //public static ref Guid IId
+        //{
+        //    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //    get
+        //    {
+        //        return ref Unsafe.As<byte, Guid>(ref MemoryMarshal.GetReference((OperatingSystem.IsWindows()
+        //                ? new ReadOnlySpan<byte>(new byte[] { 0xa2, 0x6e, 0xbf, 0xc3, 0x99, 0x30, 0x52, 0x47, 0x9b, 0x6b, 0xf9, 0x90, 0x1e, 0xe3, 0x3e, 0x9b })
+        //                : new ReadOnlySpan<byte>(new byte[] { 0xc3, 0xbf, 0x6e, 0xa2, 0x30, 0x99, 0x47, 0x52, 0x9b, 0x6b, 0xf9, 0x90, 0x1e, 0xe3, 0x3e, 0x9b })
+        //            )));
+        //    }
+        //}
     }
     
     /// <summary>
@@ -471,7 +479,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IAttributes : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -746,7 +754,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IAttributes, 0xFA1E32F9, 0xCA6D46F5, 0xA982F956, 0xB1191B58)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -822,7 +830,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IAttributes2 : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -1019,7 +1027,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IAttributes2, 0x1382126A, 0xFECA4871, 0x97D52A45, 0xB042AE99)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -1045,7 +1053,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IPluginBase : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 5;
         
@@ -1146,7 +1154,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IPluginBase, 0x22888DDB, 0x156E45AE, 0x8358B348, 0x08190625)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -1172,7 +1180,7 @@ internal static partial class LibVst
     /// <seealso cref="GetPluginFactory"/>
     public unsafe partial struct IPluginFactory : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 7;
         
@@ -1346,7 +1354,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IPluginFactory, 0x7A4D811C, 0x52114A1F, 0xAED9D2EE, 0x0B43BF9F)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -1470,7 +1478,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IPluginFactory2 : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 8;
         
@@ -1525,7 +1533,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IPluginFactory2, 0x0007B650, 0xF24B4C0B, 0xA464EDB9, 0xF00B2ABB)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -1602,7 +1610,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IPluginFactory3 : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 10;
         
@@ -1696,7 +1704,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IPluginFactory3, 0x4555A2AB, 0xC1234E57, 0x9B122910, 0x36878931)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -1771,7 +1779,7 @@ internal static partial class LibVst
     /// </summary>
     public unsafe partial struct IStringResult : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -1836,7 +1844,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IStringResult, 0x550798BC, 0x872049DB, 0x84920A15, 0x3B50B7A8)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -1859,7 +1867,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IPlugFrame : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -1927,7 +1935,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IPlugFrame, 0x367FAF01, 0xAFA94693, 0x8D4DA2A0, 0xED0882A3)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -1972,7 +1980,7 @@ internal static partial class LibVst
     /// </par>
     public unsafe partial struct IPlugView : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 15;
         
@@ -2475,7 +2483,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IPlugView, 0x5BC32507, 0xD06049EA, 0xA6151B52, 0x2B755B29)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -2526,7 +2534,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IPlugViewContentScaleSupport : INativeGuid, INativeUnknown, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -2637,7 +2645,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IPlugViewContentScaleSupport, 0x65ED9690, 0x8AC44525, 0x8AADEF7A, 0x72EA703F)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -3016,7 +3024,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IAttributeList : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -3231,7 +3239,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IAttributeList, 0x1E5F0AEB, 0xCC7F4533, 0xA2544011, 0x38AD5EE4)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -3304,7 +3312,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IStreamAttributes : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -3391,7 +3399,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IStreamAttributes, 0xD6CE2FFC, 0xEFAF4B8C, 0x9E74F1BB, 0x12DA44B4)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -3424,7 +3432,7 @@ internal static partial class LibVst
     /// <seealso cref="IPluginBase"/>
     public unsafe partial struct IComponent : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 14;
         
@@ -3795,7 +3803,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IComponent, 0xE831FF31, 0xF2D54301, 0x928EBBEE, 0x25697802)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -3928,7 +3936,7 @@ internal static partial class LibVst
     /// <seealso cref="ProcessData, Event"/>
     public unsafe partial struct IEventList : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -4036,7 +4044,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IEventList, 0x3A2C4214, 0x346349FE, 0xB2C4F397, 0xB9695A44)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -4547,7 +4555,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IParameterChanges : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -4654,7 +4662,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IParameterChanges, 0xA4779663, 0x0BB64A56, 0xB44384A8, 0x466FEB9D)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -4710,7 +4718,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IParamValueQueue : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -4838,7 +4846,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IParamValueQueue, 0x01263A18, 0xED074F6F, 0x98C9D356, 0x4686F9BA)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -4876,7 +4884,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IAudioProcessor : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 11;
         
@@ -5244,7 +5252,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IAudioProcessor, 0x42043F99, 0xB7DA453C, 0xA569E79D, 0x9AAEC33D)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -6008,7 +6016,7 @@ internal static partial class LibVst
     /// <seealso cref="IComponent"/>
     public unsafe partial struct IAudioPresentationLatency : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 4;
         
@@ -6063,7 +6071,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IAudioPresentationLatency, 0x309ECE78, 0xEB7D4fae, 0x8B2225D9, 0x09FD08B6)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -6093,7 +6101,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IProcessContextRequirements : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 4;
         
@@ -6203,7 +6211,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IProcessContextRequirements, 0x2A654303, 0xEF764E3D, 0x95B5FE83, 0x730EF6D0)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -6227,7 +6235,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IAutomationState : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 4;
         
@@ -6308,7 +6316,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IAutomationState, 0xB4E8287F, 0x1BB346AA, 0x83A46667, 0x68937BAB)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -6335,7 +6343,7 @@ internal static partial class LibVst
     /// <seealso cref="IComponentHandler3 for more information."/>
     public unsafe partial struct IContextMenu : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -6485,7 +6493,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IContextMenu, 0x2E93C863, 0x0C9C4588, 0x97DBECF5, 0xAD17817D)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -6568,7 +6576,7 @@ internal static partial class LibVst
     /// <seealso cref="IComponentHandler3 for more information."/>
     public unsafe partial struct IContextMenuTarget : INativeGuid, INativeUnknown, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -6685,7 +6693,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IContextMenuTarget, 0x3CDF2E75, 0x85D34144, 0xBF86D36B, 0xD7C4894D)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -6776,7 +6784,7 @@ internal static partial class LibVst
     /// <seealso cref="IContextMenuTarget"/>
     public unsafe partial struct IComponentHandler3 : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -6845,7 +6853,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IComponentHandler3, 0x69F11617, 0xD26B400D, 0xA4B6B964, 0x7B6EBBAB)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -6870,7 +6878,7 @@ internal static partial class LibVst
     /// <seealso cref="IEditController"/>
     public unsafe partial struct IComponentHandler : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -7004,7 +7012,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IComponentHandler, 0x93A0BEA3, 0x0BD045DB, 0x8E890B0C, 0xC1E46AC6)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -7068,7 +7076,7 @@ internal static partial class LibVst
     /// <seealso cref="IEditControllerIComponentHandler,"/>
     public unsafe partial struct IComponentHandler2 : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -7200,7 +7208,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IComponentHandler2, 0xF040B4B3, 0xA36045EC, 0xABCDC045, 0xB4D5A2CC)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -7235,7 +7243,7 @@ internal static partial class LibVst
     /// <seealso cref="IComponentHandler"/>
     public unsafe partial struct IComponentHandlerBusActivation : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -7302,7 +7310,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IComponentHandlerBusActivation, 0x067D02C1, 0x5B4E274D, 0xA92D90FD, 0x6EAF7240)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -7352,7 +7360,7 @@ internal static partial class LibVst
     /// <seealso cref="IComponentHandler"/>
     public unsafe partial struct IProgress : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -7478,7 +7486,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IProgress, 0x00C9DC5B, 0x9D904254, 0x91A388C8, 0xB4E91B69)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -7509,7 +7517,7 @@ internal static partial class LibVst
     /// <seealso cref="IMidiMappingIComponent::getControllerClassId,"/>
     public unsafe partial struct IEditController : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 18;
         
@@ -8039,7 +8047,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IEditController, 0xDCD7BBE3, 0x7742448D, 0xA874AACC, 0x979C759E)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -8168,7 +8176,7 @@ internal static partial class LibVst
     /// <seealso cref="EditControllerIEditController,"/>
     public unsafe partial struct IEditController2 : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 6;
         
@@ -8306,7 +8314,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IEditController2, 0x7F4EFE59, 0xF3204967, 0xAC27A3AE, 0xAFB63038)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -8373,7 +8381,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IMidiMapping : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 4;
         
@@ -8432,7 +8440,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IMidiMapping, 0xDF0FF9F7, 0x49B74669, 0xB63AB732, 0x7ADBF5E5)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -8474,7 +8482,7 @@ internal static partial class LibVst
     /// <seealso cref="IEditController"/>
     public unsafe partial struct IEditControllerHostEditing : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 5;
         
@@ -8568,7 +8576,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IEditControllerHostEditing, 0xC1271208, 0x70594098, 0xB9DD34B3, 0x6BB0195E)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -8595,7 +8603,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct INoteExpressionController : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 7;
         
@@ -8767,7 +8775,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (INoteExpressionController, 0xB7F8F859, 0x41234872, 0x91169581, 0x4F3721A3)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -8896,7 +8904,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IKeyswitchController : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 5;
         
@@ -8990,7 +8998,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IKeyswitchController, 0x1F2F76D3, 0xBFFB4B96, 0xB99527A5, 0x5EBCCEF4)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -9068,7 +9076,7 @@ internal static partial class LibVst
     /// <seealso cref="vst3CommunicationIAttributeList, IConnectionPoint, "/>
     public unsafe partial struct IMessage : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -9173,7 +9181,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IMessage, 0x936F033B, 0xC6C047DB, 0xBB0882F8, 0x13C1E613)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -9199,7 +9207,7 @@ internal static partial class LibVst
     /// <seealso cref="vst3Communication"/>
     public unsafe partial struct IConnectionPoint : INativeGuid, INativeUnknown, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -9436,7 +9444,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IConnectionPoint, 0x70A4156F, 0x6E6E4026, 0x989148BF, 0xAA60D8D1)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -9460,7 +9468,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IHostApplication : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -9548,7 +9556,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IHostApplication, 0x58E595CC, 0xDB2D4969, 0x8B6AAF8C, 0x36A664E5)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -9577,7 +9585,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IVst3ToVst2Wrapper, 0x29633AEC, 0x1D1C47E2, 0xBB85B97B, 0xD36EAC61)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -9606,7 +9614,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IVst3ToAUWrapper, 0xA3B8C6C5, 0xC0954688, 0xB0916F0B, 0xB697AA44)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -9635,7 +9643,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IVst3ToAAXWrapper, 0x6D319DC6, 0x60C56242, 0xB32C951B, 0x93BEF4C6)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -9661,7 +9669,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IVst3WrapperMPESupport : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -9755,7 +9763,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IVst3WrapperMPESupport, 0x44149067, 0x42CF4BF9, 0x8800B750, 0xF7359FE3)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -9778,7 +9786,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IInterAppAudioPresetManager : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 7;
         
@@ -9950,7 +9958,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IInterAppAudioPresetManager, 0xADE6FCC4, 0x46C94E1D, 0xB3B49A80, 0xC93FEFDD)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -9974,7 +9982,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IInterAppAudioHost : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -10202,7 +10210,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IInterAppAudioHost, 0x0CE5743D, 0x68DF415E, 0xAE285BD4, 0xE2CDC8FD)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -10278,7 +10286,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IMidiLearn : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 4;
         
@@ -10333,7 +10341,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IMidiLearn, 0x6B2449CC, 0x419740B5, 0xAB3C79DA, 0xC5FE5C86)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -10419,7 +10427,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IParameterFunctionName : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 4;
         
@@ -10475,7 +10483,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IParameterFunctionName, 0x6D21E1DC, 0x91199D4B, 0xA2A02FEF, 0x6C1AE55C)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -10548,7 +10556,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct INoteExpressionPhysicalUIMapping : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 4;
         
@@ -10604,7 +10612,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (INoteExpressionPhysicalUIMapping, 0xB03078FF, 0x94D24AC8, 0x90CCD303, 0xD4133324)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -10689,7 +10697,7 @@ internal static partial class LibVst
     /// <seealso cref="IPluginBase"/>
     public unsafe partial struct IPlugInterfaceSupport : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -10756,7 +10764,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IPlugInterfaceSupport, 0x4FB58B9E, 0x9EAA4E0F, 0xAB361C1C, 0xCCB56FEA)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -10782,7 +10790,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IParameterFinder : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 4;
         
@@ -10837,7 +10845,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IParameterFinder, 0x0F618302, 0x215D4587, 0xA512073C, 0x77B9D383)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -10878,7 +10886,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IPrefetchableSupport : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 4;
         
@@ -10934,7 +10942,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IPrefetchableSupport, 0x8AE54FDA, 0xE93046B9, 0xA28555BC, 0xDC98E21E)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -11047,7 +11055,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IXmlRepresentationController : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 4;
         
@@ -11102,7 +11110,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IXmlRepresentationController, 0xA81A0471, 0x48C34DC4, 0xAC30C9E1, 0x3C8393D5)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -11155,7 +11163,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct ITestPlugProvider : INativeGuid, INativeUnknown, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -11526,7 +11534,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (ITestPlugProvider, 0x86BE70EE, 0x4E99430F, 0x978F1E6E, 0xD68FB5BA)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -11586,7 +11594,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct ITestPlugProvider2 : INativeGuid, INativeUnknown, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -11763,7 +11771,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (ITestPlugProvider2, 0xC7C75364, 0x7B8343AC, 0xA4495B0A, 0x3E5A46C7)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -11789,7 +11797,7 @@ internal static partial class LibVst
     /// <seealso cref="IUnitInfovst3Units,"/>
     public unsafe partial struct IUnitHandler : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -11879,7 +11887,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IUnitHandler, 0x4B5147F8, 0x4654486B, 0x8DAB30BA, 0x163A3C56)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -11914,7 +11922,7 @@ internal static partial class LibVst
     /// <seealso cref="IUnitHandlervst3Units,"/>
     public unsafe partial struct IUnitHandler2 : INativeGuid, INativeUnknown
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public void** Vtbl;
         
@@ -11981,7 +11989,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IUnitHandler2, 0xF89F8CDF, 0x699E4BA5, 0x96AAC9A4, 0x81452B01)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -12010,7 +12018,7 @@ internal static partial class LibVst
     /// <seealso cref="IUnitHandlervst3Units,"/>
     public unsafe partial struct IUnitInfo : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 15;
         
@@ -12506,7 +12514,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IUnitInfo, 0x3D4BD6B5, 0x913A4FD2, 0xA886E768, 0xA5EB92C1)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -12592,7 +12600,7 @@ internal static partial class LibVst
     /// <seealso cref="vst3MultitimbralProgramsIUnitData, "/>
     public unsafe partial struct IProgramListData : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 6;
         
@@ -12725,7 +12733,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IProgramListData, 0x8683B01F, 0x7B354F70, 0xA2651DEC, 0x353AF4FF)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -12751,7 +12759,7 @@ internal static partial class LibVst
     /// <seealso cref="vst3ProgramLists"/>
     public unsafe partial struct IUnitData : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 6;
         
@@ -12884,7 +12892,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IUnitData, 0x6C389611, 0xD391455D, 0xB870B833, 0x94A0EFDD)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -13750,7 +13758,7 @@ internal static partial class LibVst
     /// </remarks>
     public unsafe partial struct IInfoListener : INativeGuid, INativeVtbl
     {
-        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IId));
+        public static Guid* NativeGuid => (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(ref IId));
         
         public static int VtblCount => 4;
         
@@ -13805,7 +13813,7 @@ internal static partial class LibVst
         /// <summary>
         /// DECLARE_CLASS_IID (IInfoListener, 0x0F194781, 0x8D984ADA, 0xBBA0C1EF, 0xC011D8D0)
         /// </summary>
-        public static ref readonly Guid IId
+        public static ref Guid IId
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
