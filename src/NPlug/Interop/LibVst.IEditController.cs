@@ -42,7 +42,7 @@ internal static unsafe partial class LibVst
 
         private static partial ComResult getParameterInfo_ToManaged(IEditController* self, int paramIndex, ParameterInfo* info)
         {
-            var parameter = Get(self).GetParameterInfo(paramIndex);
+            var parameter = Get(self).GetParameterInfo(paramIndex).GetInfo();
             info->id = parameter.Id;
             info->title.CopyFrom(parameter.Title);
             info->shortTitle.CopyFrom(parameter.ShortTitle);

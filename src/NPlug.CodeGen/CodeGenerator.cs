@@ -28,7 +28,7 @@ namespace NPlug.CodeGen;
 /// - Collect COM IID for all interfaces
 /// - Collect various enum definitions
 /// </summary>
-public class CodeGenerator
+public partial class CodeGenerator
 {
     private readonly string _sdkFolder;
     private readonly string _pluginInterfacesFolder;
@@ -404,7 +404,7 @@ public class CodeGenerator
         container.Members.Add(csProperty);
     }
 
-    private static readonly Regex MatchDashes = new(@"^-+(?:\r?\n|$)", RegexOptions.Multiline);
+    private static readonly Regex MatchDashes = MyRegex();
 
     private void UpdateComment(CSharpElement csElement)
     {
@@ -1314,16 +1314,16 @@ public class CodeGenerator
 
     record struct Uuid(uint Value1, uint Value2, uint Value3, uint Value4)
     {
-        public ushort Value2High => (ushort)(Value2 >> 16);
+        public readonly ushort Value2High => (ushort)(Value2 >> 16);
 
-        public ushort Value2Low => (ushort)Value2;
+        public readonly ushort Value2Low => (ushort)Value2;
 
         public override string ToString()
         {
             return $"0x{Value1:x8}, 0x{Value2:x8}, 0x{Value3:x8}, 0x{Value4:x8}";
         }
 
-        public string ToBytes(bool isWindows)
+        public readonly string ToBytes(bool isWindows)
         {
             return isWindows
                     ? $"0x{Value1 & 0xFF:x2}, 0x{(Value1 >> 8) & 0xFF:x2}, 0x{(Value1 >> 16) & 0xFF:x2}, 0x{(Value1 >> 24) & 0xFF:x2}, " +
@@ -1352,4 +1352,7 @@ public class CodeGenerator
 
         public bool IsFixedArray { get; set; }
     }
+
+    [GeneratedRegex(@"^-+(?:\r?\n|$)", RegexOptions.Multiline)]
+    private static partial Regex MyRegex();
 }

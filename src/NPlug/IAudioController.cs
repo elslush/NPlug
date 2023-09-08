@@ -39,7 +39,7 @@ public interface IAudioController : IAudioPluginComponent
     /// </summary>
     /// <param name="paramIndex">The index of the parameter.</param>
     /// <returns>The parameter information.</returns>
-    AudioParameterInfo GetParameterInfo(int paramIndex);
+    AudioParameter GetParameterInfo(int paramIndex);
 
     /// <summary>
     /// Gets for a given parameter id and normalized value its associated string representation

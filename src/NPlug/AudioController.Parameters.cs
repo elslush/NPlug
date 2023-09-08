@@ -104,7 +104,7 @@ public abstract partial class AudioController<TAudioControllerModel>
     
     int IAudioController.ParameterCount => Model.ParameterCount;
 
-    AudioParameterInfo IAudioController.GetParameterInfo(int paramIndex) => Model.GetParameterByIndex(paramIndex).GetInfo();
+    AudioParameter IAudioController.GetParameterInfo(int paramIndex) => Model.GetParameterByIndex(paramIndex);
 
     string IAudioController.GetParameterStringByValue(AudioParameterId id, double valueNormalized)
     {
